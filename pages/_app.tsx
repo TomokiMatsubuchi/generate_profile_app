@@ -10,6 +10,8 @@ const App = ({ Component, pageProps }: AppProps) => {
 			<Head>
 				<title>プロフィールジェネレーター</title>
 				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta property="og:title" content="プロフィールジェネレーター" />
+				<meta name="twitter:card" content="summary_large_image" />
 			</Head>
 			<Component {...pageProps} />
 		</>
