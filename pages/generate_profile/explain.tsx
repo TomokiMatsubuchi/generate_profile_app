@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 import Link from 'next/link'
 import Layout from '@/components/layout/default'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { type } from 'os'
 
 type FormValues = {
 	name: string
@@ -11,6 +12,11 @@ type FormValues = {
 	whereILive: string
 }
 
+type GptMessage = {
+	role: 'user' | 'system' | 'assistant'
+	content: string
+}
+
 const FormPage: NextPage = () => {
 	const {
 		register,
@@ -18,8 +24,54 @@ const FormPage: NextPage = () => {
 		formState: { isDirty, isValid, errors },
 	} = useForm<FormValues>({ mode: 'onChange' })
 
-	const onSubmit = async (data) => {
-		console.log(data)
+	const onSubmit = async (data: FormValues) => {
+		const message = createMessage(data)
+		await chatCompletion(message)
+	}
+
+	const createMessage = (data: FormValues) => {
+		const userName = data.name
+		const userAge = data.age
+		const userFavoriteThings = data.favoriteThings
+		const userPurpose = data.purpose
+		const userLived = data.whereILive
+		const content = `
+			あなたは恋愛マスターです。
+			次のプロフィール情報を持つ人間のマッチングアプリ用の自己紹介メッセージを作成してください。
+			名前: ${userName}
+			年齢: ${userAge}
+			趣味: ${userFavoriteThings}
+			マッチングアプリの使用目的: ${userPurpose}
+			居住地: ${userLived}
+			`
+		const message: GptMessage[] = [
+			{
+				role: 'user',
+				content: content,
+			},
+		]
+		return message
+	}
+
+	const chatCompletion = async (
+		message: GptMessage[]
+	): Promise<GptMessage[] | undefined> => {
+		const body = JSON.stringify({
+			message,
+			model: 'gpt-3.5-turbo',
+		})
+
+		const res = await fetch('https://api.openai.com/v1/chat/completions', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+				Authorization: `Bearer ${apiKey}`,
+			},
+			body,
+		})
+
+		const resdata = res.json()
+		return resdata.choices[0].message
 	}
 
 	return (
@@ -89,7 +141,7 @@ const FormPage: NextPage = () => {
 						{errors.whereILive.message}
 					</span>
 				)}
-				<button type="submit" disabled={!isDirty}>
+				<button type="submit" disabled={!isDirty || !isValid}>
 					プロフィールを作成する
 				</button>
 			</form>
