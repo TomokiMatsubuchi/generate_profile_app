@@ -25,8 +25,13 @@ const FormPage: NextPage = () => {
 	} = useForm<FormValues>({ mode: 'onChange' })
 
 	const onSubmit = async (data: FormValues) => {
-		const message = createMessage(data)
-		await chatCompletion(message)
+		try {
+			const message = createMessage(data)
+			const gptResponse = await chatCompletion(message)
+			console.log(gptResponse)
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	const createMessage = (data: FormValues) => {
@@ -56,6 +61,8 @@ const FormPage: NextPage = () => {
 	const chatCompletion = async (
 		message: GptMessage[]
 	): Promise<GptMessage[] | undefined> => {
+		const apiKey = process.env.NEXT_PUBLIC_API_KEY
+
 		const body = JSON.stringify({
 			message,
 			model: 'gpt-3.5-turbo',
