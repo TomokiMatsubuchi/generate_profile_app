@@ -13,10 +13,12 @@ const Layout = ({ children }: LayoutProps) => {
 		{
 			pageName: 'TOP',
 			href: '/',
+			dataTestId: 'nav-top',
 		},
 		{
 			pageName: 'プロフィール作成',
 			href: '/generate_profile/explain',
+			dataTestId: 'nav-profile',
 		},
 	]
 
@@ -24,7 +26,11 @@ const Layout = ({ children }: LayoutProps) => {
 	const headerLinkList = headerLinks.map((link, index) => {
 		return (
 			<li key={index} className={styles.header_content}>
-				<Link href={link.href} className={styles.header_link}>
+				<Link
+					href={link.href}
+					className={styles.header_link}
+					data-testid={link.dataTestId}
+				>
 					{link.pageName}
 				</Link>
 			</li>

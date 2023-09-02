@@ -5,7 +5,7 @@ import Layout from '@/components/layout/default'
 const IndexPage: NextPage = () => {
 	return (
 		<Layout>
-			<h2> トップページ</h2>
+			<h2>トップページ</h2>
 			<p>ここから実装が始まる。</p>
 			<Link href="/generate_profile/explain">プロフィール作成画面へ</Link>
 		</Layout>
