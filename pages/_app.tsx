@@ -2,7 +2,7 @@
 
 import { AppProps } from 'next/app'
 import Head from 'next/head'
-import '@/styles/global.css' // 共通のcssのimport
+import '@/styles/global.scss' // 共通のcssのimport
 
 const App = ({ Component, pageProps }: AppProps) => {
 	return (
