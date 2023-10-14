@@ -17,8 +17,13 @@ const Layout = ({ children }: LayoutProps) => {
 		},
 		{
 			pageName: 'プロフィール作成',
-			href: '/generate_profile/explain',
+			href: '/generate_profile',
 			dataTestId: 'nav-profile',
+		},
+		{
+			pageName: 'ログイン画面',
+			href: '/login',
+			dataTestId: 'nav-login',
 		},
 	]
 
@@ -38,13 +43,13 @@ const Layout = ({ children }: LayoutProps) => {
 	})
 
 	return (
-		<div>
+		<>
 			<header className={styles.header_container}>
 				<h2>ProfileGenerater</h2>
 				<ul className={styles.header_list}>{headerLinkList}</ul>
 			</header>
 			<main className={styles.container}>{children}</main>
-		</div>
+		</>
 	)
 }
 
