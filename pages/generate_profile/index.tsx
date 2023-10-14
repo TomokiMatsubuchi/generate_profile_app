@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Layout from '@/components/layout/default'
 import { useForm, SubmitHandler } from 'react-hook-form'
 
-type FormValues = {
+type profileFormValues = {
 	name: string
 	age: number
 	favoriteThings: string
@@ -16,9 +16,9 @@ const ProfileFormPage: NextPage = () => {
 		register,
 		handleSubmit,
 		formState: { isDirty, isValid, errors },
-	} = useForm<FormValues>({ mode: 'onChange' })
+	} = useForm<profileFormValues>({ mode: 'onChange' })
 
-	const onSubmit = async (data: FormValues) => {
+	const onSubmit = async (data: profileFormValues) => {
 		console.log(data)
 	}
 
