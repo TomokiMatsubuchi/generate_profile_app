@@ -1,20 +1,20 @@
 import axios from 'axios'
 
-const prefixUrl = process.env.API_URL
+const prefixUrl = process.env.NEXT_PUBLIC_API_URL
 
-export const sendHttpRequest = async (
-	httpmethod: string,
+export const sendHttpRequest = async <T>(
 	endpoint: string,
-	requestBody: object
-): Promise<unknown> => {
+	httpMethod: string,
+	requestBody: T
+): Promise<void> => {
 	const url = prefixUrl + endpoint
-	if (httpmethod === 'GET') {
+	if (httpMethod === 'GET') {
 		const response = await axios.get(url)
 		return response
-	} else if (httpmethod === 'POST') {
+	} else if (httpMethod === 'POST') {
 		const response = await axios.post(url, requestBody)
 		return response
 	} else {
-		throw new Error(`Method ${httpmethod} not supported`)
+		throw new Error(`Method ${httpMethod} not supported`)
 	}
 }

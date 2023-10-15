@@ -16,10 +16,14 @@ const LoginForm: NextPage = () => {
 	} = useForm<loginFormValues>({ mode: 'onChange' })
 
 	const onSubmit = async (data: loginFormValues): Promise<void> => {
-		// console.log(data)
-		const endpoint = `/login`
+		const endpoint = `/auth/sign_in`
 		const httpMethod = 'POST'
-		const response = await sendHttpRequest(endpoint, httpMethod, data)
+		const response = await sendHttpRequest<loginFormValues>(
+			endpoint,
+			httpMethod,
+			data
+		)
+		console.log(response)
 	}
 
 	return (

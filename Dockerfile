@@ -1,6 +1,6 @@
 FROM node:18
 
-WORKDIR /frontend
+WORKDIR /front
 
 COPY package*.json ./
 RUN yarn install
